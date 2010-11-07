@@ -7,7 +7,7 @@
  *
  * Contributors:
  *  Ugo Sangiorgi <ugo.sangiorgi@gmail.com> - Initial contribution
- *  gr8vyguy <http://code.google.com/u/gr8vyguy/> - Original code
+ *  Daoen Pan <http://code.google.com/u/gr8vyguy/> - Original code
  *******************************************************************************/
 package org.ugosan.eclipse.fullscreen;
 

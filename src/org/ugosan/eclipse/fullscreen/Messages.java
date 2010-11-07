@@ -14,7 +14,7 @@ package org.ugosan.eclipse.fullscreen;
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "cn.pande.eclipsex.fullscreen.internal.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.ugosan.eclipse.fullscreen.messages"; //$NON-NLS-1$
 	public static String FullScreenPreferencePage_0;
 	public static String FullScreenPreferencePage_1;
 	static {
