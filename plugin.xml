@@ -70,5 +70,8 @@
             class="org.ugosan.eclipse.fullscreen.FullScreenPreferenceInitializer">
       </initializer>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+   </extension>
 
 </plugin>
