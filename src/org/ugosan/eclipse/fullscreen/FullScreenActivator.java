@@ -18,25 +18,20 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.Preferences;
 
-public class FullScreenActivator extends AbstractUIPlugin {
+public class FullScreenActivator extends AbstractUIPlugin implements IStartup {
 
 	public static final String ID = "org.ugosan.eclipse.fullscreen"; //$NON-NLS-1$
 	public static final String HIDE_MENU_BAR = "hide_menu_bar"; //$NON-NLS-1$
@@ -145,5 +140,22 @@ public class FullScreenActivator extends AbstractUIPlugin {
 		Preferences preferences = Platform.getPreferencesService()
 				.getRootNode().node(InstanceScope.SCOPE).node(ID);
 		return preferences.getBoolean(HIDE_STATUS_BAR, true);
+	}
+
+	public void earlyStartup() {
+		if ( !(getHideMenuBar() && getHideStatusBar()) ) {
+			return;
+		}
+		
+        final IWorkbench workbench = PlatformUI.getWorkbench();
+        workbench.getDisplay().asyncExec(new Runnable() {
+          public void run() {
+            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+            if (window != null) {
+            	Shell mainShell = window.getShell();
+        		getDefault().setFullScreen(mainShell, true);
+            }
+          }
+        });
 	}
 }
