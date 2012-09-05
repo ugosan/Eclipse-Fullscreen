@@ -36,10 +36,12 @@ public class FullScreenActivator extends AbstractUIPlugin implements IStartup {
 	public static final String ID = "org.ugosan.eclipse.fullscreen"; //$NON-NLS-1$
 	public static final String HIDE_MENU_BAR = "hide_menu_bar"; //$NON-NLS-1$
 	public static final String HIDE_STATUS_BAR = "hide_status_bar"; //$NON-NLS-1$
+	public static final String ONLY_HIDE_BARS = "only_hide_bars"; //$NON-NLS-1$
 
 	private static FullScreenActivator INSTANCE;
 	private Map controlLists;
 	private Map menuBars;
+	private boolean mode;
 
 	public static FullScreenActivator getDefault() {
 		return INSTANCE;
@@ -49,6 +51,7 @@ public class FullScreenActivator extends AbstractUIPlugin implements IStartup {
 		super.start(context);
 		controlLists = new HashMap();
 		menuBars = new HashMap();
+		mode = false;
 		INSTANCE = this;
 	}
 
@@ -62,14 +65,25 @@ public class FullScreenActivator extends AbstractUIPlugin implements IStartup {
 	}
 
 	/**
+	 * Toggles the full screen state
+	 * @param mainShell
+	 */
+	public void toggleFullScreen(Shell mainShell) {
+		setFullScreen(mainShell, ! mode);
+	}
+
+	/**
 	 * Set the workbench window full screen state.
-	 * 
+	 *
 	 * @param window the workbench window
 	 * @param fullScreen new full screen state
 	 */
 	public void setFullScreen(Shell mainShell, boolean fullScreen) {
-		if (mainShell == null || mainShell.isDisposed())
+		if (mainShell == null || mainShell.isDisposed()) {
 			return;
+		}
+
+		mode = fullScreen;
 
 		if (fullScreen) {
 			List controls = hideTrimControls(mainShell);
@@ -77,9 +91,9 @@ public class FullScreenActivator extends AbstractUIPlugin implements IStartup {
 			if (getHideMenuBar()) {
 				Menu menuBar = mainShell.getMenuBar();
 				mainShell.setMenuBar(null);
-				menuBars.put(mainShell, menuBar);				
+				menuBars.put(mainShell, menuBar);
 			}
-			
+
 		} else {
 			showTrimControls(mainShell);
 			controlLists.remove(mainShell);
@@ -91,7 +105,11 @@ public class FullScreenActivator extends AbstractUIPlugin implements IStartup {
 			}
 		}
 
-		mainShell.setFullScreen(fullScreen);
+		if ( ! getOnlyHideBars() ) {
+			mainShell.setFullScreen(fullScreen);
+		} else {
+			mainShell.setFullScreen(false);
+		}
 		mainShell.layout();
 	}
 
@@ -109,14 +127,17 @@ public class FullScreenActivator extends AbstractUIPlugin implements IStartup {
 		List controls = new ArrayList();
 		Control[] children = mainShell.getChildren();
 		for (int i = 0; i < children.length; i++) {
-			Control child = children[i];			
-			if (child.isDisposed() || !child.isVisible())
+			Control child = children[i];
+			if (child.isDisposed() || !child.isVisible()) {
 				continue;
-			if (child.getClass().equals(Canvas.class))
+			}
+			if (child.getClass().equals(Canvas.class)) {
 				continue;
-			if (child.getClass().equals(Composite.class))
+			}
+			if (child.getClass().equals(Composite.class)) {
 				continue;
-			
+			}
+
 			// org.eclipse.jface.action.StatusLine is an internal class
 			//the only way to hide it is by getting its name in string form
 			//TODO: find a more elegant way to do fetch the status line
@@ -130,12 +151,18 @@ public class FullScreenActivator extends AbstractUIPlugin implements IStartup {
 		return controls;
 	}
 
+	private boolean getOnlyHideBars() {
+		Preferences preferences = Platform.getPreferencesService()
+				.getRootNode().node(InstanceScope.SCOPE).node(ID);
+		return preferences.getBoolean(ONLY_HIDE_BARS, true);
+	}
+
 	private boolean getHideMenuBar() {
 		Preferences preferences = Platform.getPreferencesService()
 				.getRootNode().node(InstanceScope.SCOPE).node(ID);
 		return preferences.getBoolean(HIDE_MENU_BAR, true);
 	}
-	
+
 	private boolean getHideStatusBar() {
 		Preferences preferences = Platform.getPreferencesService()
 				.getRootNode().node(InstanceScope.SCOPE).node(ID);
@@ -146,14 +173,14 @@ public class FullScreenActivator extends AbstractUIPlugin implements IStartup {
 		if ( !(getHideMenuBar() && getHideStatusBar()) ) {
 			return;
 		}
-		
+
         final IWorkbench workbench = PlatformUI.getWorkbench();
         workbench.getDisplay().asyncExec(new Runnable() {
           public void run() {
             IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
             if (window != null) {
             	Shell mainShell = window.getShell();
-        		getDefault().setFullScreen(mainShell, true);
+        		getDefault().toggleFullScreen(mainShell);
             }
           }
         });

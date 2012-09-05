@@ -41,6 +41,10 @@ public class FullScreenPreferencePage extends FieldEditorPreferencePage
 				FullScreenActivator.HIDE_STATUS_BAR,
 				Messages.FullScreenPreferencePage_1, getFieldEditorParent());
 		addField(boolEditor_status);
+		BooleanFieldEditor boolEditor_onlyBars = new BooleanFieldEditor(
+				FullScreenActivator.ONLY_HIDE_BARS,
+				Messages.FullScreenPreferencePage_2, getFieldEditorParent());
+		addField(boolEditor_onlyBars);
 	}
 
 	public void init(IWorkbench workbench) {

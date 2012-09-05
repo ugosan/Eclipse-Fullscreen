@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="Eclipse-Fullscreen/build/plugins/org.ugosan.eclipse.fullscreen_1.0.10.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/Eclipse-Fullscreen/export.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="false" manifestLocation="/Eclipse-Fullscreen/META-INF/MANIFEST.MF" manifestVersion="1.0" reuseManifest="false" saveManifest="true" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <file path="/Eclipse-Fullscreen/plugin.xml"/>
+        <file path="/Eclipse-Fullscreen/plugin_zh_CN.properties"/>
+        <file path="/Eclipse-Fullscreen/README.TXT"/>
+        <folder path="/Eclipse-Fullscreen/META-INF"/>
+        <javaElement handleIdentifier="=Eclipse-Fullscreen/src"/>
+        <file path="/Eclipse-Fullscreen/plugin.properties"/>
+        <file path="/Eclipse-Fullscreen/plugin_fr_FR.properties"/>
+        <file path="/Eclipse-Fullscreen/build.properties"/>
+        <file path="/Eclipse-Fullscreen/plugin_de_DE.properties"/>
+    </selectedElements>
+</jardesc>

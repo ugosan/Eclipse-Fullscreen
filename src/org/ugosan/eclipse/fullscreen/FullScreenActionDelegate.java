@@ -40,8 +40,7 @@ public class FullScreenActionDelegate implements IWorkbenchWindowActionDelegate 
 	 */
 	public void run(IAction action) {
 		Shell mainShell = window.getShell();
-		FullScreenActivator.getDefault().setFullScreen(mainShell,
-				!mainShell.getFullScreen());
+		FullScreenActivator.getDefault().toggleFullScreen(mainShell);
 	}
 
 	/*
