@@ -120,7 +120,7 @@ public class FullScreenActivator extends AbstractUIPlugin implements IStartup {
 			// org.eclipse.jface.action.StatusLine is an internal class
 			//the only way to hide it is by getting its name in string form
 			//TODO: find a more elegant way to do fetch the status line
-			if (!getHideStatusBar() && child.getClass().toString().contains("StatusLine")){
+			if (!getHideStatusBar() && child.getClass().toString().contains("StatusLine")){ //$NON-NLS-1$
 				child.setVisible(true);
 			}else{
 				child.setVisible(false);

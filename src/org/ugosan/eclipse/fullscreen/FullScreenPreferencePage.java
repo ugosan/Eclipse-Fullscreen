@@ -27,7 +27,7 @@ public class FullScreenPreferencePage extends FieldEditorPreferencePage
 
 	public FullScreenPreferencePage() {
 		super(GRID);
-		preferences = new ScopedPreferenceStore(new InstanceScope(),
+		preferences = new ScopedPreferenceStore(InstanceScope.INSTANCE,
 				FullScreenActivator.ID);
 		setPreferenceStore(preferences);
 	}
