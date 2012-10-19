@@ -24,6 +24,7 @@ public class FullScreenPreferenceInitializer extends
 				InstanceScope.INSTANCE, FullScreenActivator.ID);
 		preferences.setDefault(FullScreenActivator.HIDE_MENU_BAR, true);
 		preferences.setDefault(FullScreenActivator.HIDE_STATUS_BAR, true);
+		preferences.setDefault(FullScreenActivator.FULLSCREEN_STARTUP, false);
 	}
 
 }

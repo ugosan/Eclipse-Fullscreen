@@ -36,6 +36,8 @@ public class FullScreenActivator extends AbstractUIPlugin implements IStartup {
 	public static final String ID = "org.ugosan.eclipse.fullscreen"; //$NON-NLS-1$
 	public static final String HIDE_MENU_BAR = "hide_menu_bar"; //$NON-NLS-1$
 	public static final String HIDE_STATUS_BAR = "hide_status_bar"; //$NON-NLS-1$
+	public static final String FULLSCREEN_STARTUP = "fullscreen_startup"; //$NON-NLS-1$
+	
 
 	private static FullScreenActivator INSTANCE;
 	private Map controlLists;
@@ -120,6 +122,9 @@ public class FullScreenActivator extends AbstractUIPlugin implements IStartup {
 			// org.eclipse.jface.action.StatusLine is an internal class
 			//the only way to hide it is by getting its name in string form
 			//TODO: find a more elegant way to do fetch the status line
+			
+			
+			
 			if (!getHideStatusBar() && child.getClass().toString().contains("StatusLine")){ //$NON-NLS-1$
 				child.setVisible(true);
 			}else{
@@ -131,21 +136,26 @@ public class FullScreenActivator extends AbstractUIPlugin implements IStartup {
 	}
 
 	private boolean getHideMenuBar() {
-		Preferences preferences = Platform.getPreferencesService()
-				.getRootNode().node(InstanceScope.SCOPE).node(ID);
-		return preferences.getBoolean(HIDE_MENU_BAR, true);
+		return preferences().getBoolean(HIDE_MENU_BAR, true);
 	}
 	
 	private boolean getHideStatusBar() {
+		return preferences().getBoolean(HIDE_STATUS_BAR, true);
+	}
+	
+	private boolean getFullscreenStartup() {
+		return preferences().getBoolean(FULLSCREEN_STARTUP, false);
+	}
+
+	private Preferences preferences() {
 		Preferences preferences = Platform.getPreferencesService()
 				.getRootNode().node(InstanceScope.SCOPE).node(ID);
-		return preferences.getBoolean(HIDE_STATUS_BAR, true);
+		return preferences;
 	}
 
 	public void earlyStartup() {
-		if ( !(getHideMenuBar() && getHideStatusBar()) ) {
+		if (!getFullscreenStartup())
 			return;
-		}
 		
         final IWorkbench workbench = PlatformUI.getWorkbench();
         workbench.getDisplay().asyncExec(new Runnable() {
