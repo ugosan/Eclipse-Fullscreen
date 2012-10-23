@@ -21,9 +21,10 @@ public class FullScreenPreferenceInitializer extends
 
 	public void initializeDefaultPreferences() {
 		ScopedPreferenceStore preferences = new ScopedPreferenceStore(
-				new InstanceScope(), FullScreenActivator.ID);
+				InstanceScope.INSTANCE, FullScreenActivator.ID);
 		preferences.setDefault(FullScreenActivator.HIDE_MENU_BAR, true);
 		preferences.setDefault(FullScreenActivator.HIDE_STATUS_BAR, true);
+		preferences.setDefault(FullScreenActivator.FULLSCREEN_STARTUP, false);
 	}
 
 }

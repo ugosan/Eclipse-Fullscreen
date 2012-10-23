@@ -27,20 +27,26 @@ public class FullScreenPreferencePage extends FieldEditorPreferencePage
 
 	public FullScreenPreferencePage() {
 		super(GRID);
-		preferences = new ScopedPreferenceStore(new InstanceScope(),
+		preferences = new ScopedPreferenceStore(InstanceScope.INSTANCE,
 				FullScreenActivator.ID);
 		setPreferenceStore(preferences);
 	}
 
 	protected void createFieldEditors() {
-		BooleanFieldEditor boolEditor = new BooleanFieldEditor(
+		BooleanFieldEditor hideMenuBarEditor = new BooleanFieldEditor(
 				FullScreenActivator.HIDE_MENU_BAR,
 				Messages.FullScreenPreferencePage_0, getFieldEditorParent());
-		addField(boolEditor);
-		BooleanFieldEditor boolEditor_status = new BooleanFieldEditor(
+		addField(hideMenuBarEditor);
+		
+		BooleanFieldEditor hideStatusBarEditor = new BooleanFieldEditor(
 				FullScreenActivator.HIDE_STATUS_BAR,
 				Messages.FullScreenPreferencePage_1, getFieldEditorParent());
-		addField(boolEditor_status);
+		addField(hideStatusBarEditor);
+		
+		BooleanFieldEditor fullscreenStartupEditor = new BooleanFieldEditor(
+				FullScreenActivator.FULLSCREEN_STARTUP,
+				Messages.FullScreenPreferencePage_2, getFieldEditorParent());
+		addField(fullscreenStartupEditor);
 	}
 
 	public void init(IWorkbench workbench) {
